@@ -1,0 +1,349 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		9F0EF86C174EF85F003CE728 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F0EF86B174EF85F003CE728 /* UIKit.framework */; };
+		9F0EF86E174EF85F003CE728 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F0EF86D174EF85F003CE728 /* Foundation.framework */; };
+		9F0EF870174EF85F003CE728 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F0EF86F174EF85F003CE728 /* CoreGraphics.framework */; };
+		9F0EF876174EF85F003CE728 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9F0EF874174EF85F003CE728 /* InfoPlist.strings */; };
+		9F0EF878174EF85F003CE728 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F0EF877174EF85F003CE728 /* main.m */; };
+		9F0EF87C174EF85F003CE728 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F0EF87B174EF85F003CE728 /* AppDelegate.m */; };
+		9F0EF87E174EF85F003CE728 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 9F0EF87D174EF85F003CE728 /* Default.png */; };
+		9F0EF880174EF85F003CE728 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9F0EF87F174EF85F003CE728 /* Default@2x.png */; };
+		9F0EF882174EF85F003CE728 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9F0EF881174EF85F003CE728 /* Default-568h@2x.png */; };
+		9F0EF885174EF85F003CE728 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F0EF884174EF85F003CE728 /* ViewController.m */; };
+		9F0EF888174EF85F003CE728 /* ViewController_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F0EF886174EF85F003CE728 /* ViewController_iPhone.xib */; };
+		9F0EF88B174EF85F003CE728 /* ViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F0EF889174EF85F003CE728 /* ViewController_iPad.xib */; };
+		9F0EF894174EFA93003CE728 /* ATMField.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F0EF893174EFA93003CE728 /* ATMField.m */; };
+		9F0EF898174F050A003CE728 /* UIXATMField.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F0EF897174F050A003CE728 /* UIXATMField.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		9F0EF868174EF85F003CE728 /* UIXATMFieldDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UIXATMFieldDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		9F0EF86B174EF85F003CE728 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		9F0EF86D174EF85F003CE728 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		9F0EF86F174EF85F003CE728 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		9F0EF873174EF85F003CE728 /* UIXATMFieldDemo-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "UIXATMFieldDemo-Info.plist"; sourceTree = "<group>"; };
+		9F0EF875174EF85F003CE728 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		9F0EF877174EF85F003CE728 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		9F0EF879174EF85F003CE728 /* UIXATMFieldDemo-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIXATMFieldDemo-Prefix.pch"; sourceTree = "<group>"; };
+		9F0EF87A174EF85F003CE728 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		9F0EF87B174EF85F003CE728 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		9F0EF87D174EF85F003CE728 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		9F0EF87F174EF85F003CE728 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		9F0EF881174EF85F003CE728 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		9F0EF883174EF85F003CE728 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		9F0EF884174EF85F003CE728 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		9F0EF887174EF85F003CE728 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ViewController_iPhone.xib; sourceTree = "<group>"; };
+		9F0EF88A174EF85F003CE728 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ViewController_iPad.xib; sourceTree = "<group>"; };
+		9F0EF892174EFA93003CE728 /* ATMField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATMField.h; sourceTree = "<group>"; };
+		9F0EF893174EFA93003CE728 /* ATMField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATMField.m; sourceTree = "<group>"; };
+		9F0EF896174F050A003CE728 /* UIXATMField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UIXATMField.h; path = ../UIXATMField.h; sourceTree = "<group>"; };
+		9F0EF897174F050A003CE728 /* UIXATMField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UIXATMField.m; path = ../UIXATMField.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		9F0EF865174EF85F003CE728 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9F0EF86C174EF85F003CE728 /* UIKit.framework in Frameworks */,
+				9F0EF86E174EF85F003CE728 /* Foundation.framework in Frameworks */,
+				9F0EF870174EF85F003CE728 /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		9F0EF85F174EF85F003CE728 = {
+			isa = PBXGroup;
+			children = (
+				9F0EF895174F04C2003CE728 /* UIXATMField */,
+				9F0EF891174EFA93003CE728 /* ATMField */,
+				9F0EF871174EF85F003CE728 /* UIXATMFieldDemo */,
+				9F0EF86A174EF85F003CE728 /* Frameworks */,
+				9F0EF869174EF85F003CE728 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		9F0EF869174EF85F003CE728 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				9F0EF868174EF85F003CE728 /* UIXATMFieldDemo.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		9F0EF86A174EF85F003CE728 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				9F0EF86B174EF85F003CE728 /* UIKit.framework */,
+				9F0EF86D174EF85F003CE728 /* Foundation.framework */,
+				9F0EF86F174EF85F003CE728 /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		9F0EF871174EF85F003CE728 /* UIXATMFieldDemo */ = {
+			isa = PBXGroup;
+			children = (
+				9F0EF87A174EF85F003CE728 /* AppDelegate.h */,
+				9F0EF87B174EF85F003CE728 /* AppDelegate.m */,
+				9F0EF883174EF85F003CE728 /* ViewController.h */,
+				9F0EF884174EF85F003CE728 /* ViewController.m */,
+				9F0EF886174EF85F003CE728 /* ViewController_iPhone.xib */,
+				9F0EF889174EF85F003CE728 /* ViewController_iPad.xib */,
+				9F0EF872174EF85F003CE728 /* Supporting Files */,
+			);
+			path = UIXATMFieldDemo;
+			sourceTree = "<group>";
+		};
+		9F0EF872174EF85F003CE728 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				9F0EF873174EF85F003CE728 /* UIXATMFieldDemo-Info.plist */,
+				9F0EF874174EF85F003CE728 /* InfoPlist.strings */,
+				9F0EF877174EF85F003CE728 /* main.m */,
+				9F0EF879174EF85F003CE728 /* UIXATMFieldDemo-Prefix.pch */,
+				9F0EF87D174EF85F003CE728 /* Default.png */,
+				9F0EF87F174EF85F003CE728 /* Default@2x.png */,
+				9F0EF881174EF85F003CE728 /* Default-568h@2x.png */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		9F0EF891174EFA93003CE728 /* ATMField */ = {
+			isa = PBXGroup;
+			children = (
+				9F0EF892174EFA93003CE728 /* ATMField.h */,
+				9F0EF893174EFA93003CE728 /* ATMField.m */,
+			);
+			name = ATMField;
+			path = ../UIXATMField;
+			sourceTree = "<group>";
+		};
+		9F0EF895174F04C2003CE728 /* UIXATMField */ = {
+			isa = PBXGroup;
+			children = (
+				9F0EF896174F050A003CE728 /* UIXATMField.h */,
+				9F0EF897174F050A003CE728 /* UIXATMField.m */,
+			);
+			name = UIXATMField;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		9F0EF867174EF85F003CE728 /* UIXATMFieldDemo */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9F0EF88E174EF85F003CE728 /* Build configuration list for PBXNativeTarget "UIXATMFieldDemo" */;
+			buildPhases = (
+				9F0EF864174EF85F003CE728 /* Sources */,
+				9F0EF865174EF85F003CE728 /* Frameworks */,
+				9F0EF866174EF85F003CE728 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = UIXATMFieldDemo;
+			productName = UIXATMFieldDemo;
+			productReference = 9F0EF868174EF85F003CE728 /* UIXATMFieldDemo.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		9F0EF860174EF85F003CE728 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0460;
+				ORGANIZATIONNAME = Salesforce.com;
+			};
+			buildConfigurationList = 9F0EF863174EF85F003CE728 /* Build configuration list for PBXProject "UIXATMFieldDemo" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 9F0EF85F174EF85F003CE728;
+			productRefGroup = 9F0EF869174EF85F003CE728 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				9F0EF867174EF85F003CE728 /* UIXATMFieldDemo */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		9F0EF866174EF85F003CE728 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9F0EF876174EF85F003CE728 /* InfoPlist.strings in Resources */,
+				9F0EF87E174EF85F003CE728 /* Default.png in Resources */,
+				9F0EF880174EF85F003CE728 /* Default@2x.png in Resources */,
+				9F0EF882174EF85F003CE728 /* Default-568h@2x.png in Resources */,
+				9F0EF888174EF85F003CE728 /* ViewController_iPhone.xib in Resources */,
+				9F0EF88B174EF85F003CE728 /* ViewController_iPad.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		9F0EF864174EF85F003CE728 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9F0EF878174EF85F003CE728 /* main.m in Sources */,
+				9F0EF87C174EF85F003CE728 /* AppDelegate.m in Sources */,
+				9F0EF885174EF85F003CE728 /* ViewController.m in Sources */,
+				9F0EF894174EFA93003CE728 /* ATMField.m in Sources */,
+				9F0EF898174F050A003CE728 /* UIXATMField.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		9F0EF874174EF85F003CE728 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				9F0EF875174EF85F003CE728 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		9F0EF886174EF85F003CE728 /* ViewController_iPhone.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				9F0EF887174EF85F003CE728 /* en */,
+			);
+			name = ViewController_iPhone.xib;
+			sourceTree = "<group>";
+		};
+		9F0EF889174EF85F003CE728 /* ViewController_iPad.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				9F0EF88A174EF85F003CE728 /* en */,
+			);
+			name = ViewController_iPad.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		9F0EF88C174EF85F003CE728 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		9F0EF88D174EF85F003CE728 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		9F0EF88F174EF85F003CE728 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "UIXATMFieldDemo/UIXATMFieldDemo-Prefix.pch";
+				INFOPLIST_FILE = "UIXATMFieldDemo/UIXATMFieldDemo-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		9F0EF890174EF85F003CE728 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "UIXATMFieldDemo/UIXATMFieldDemo-Prefix.pch";
+				INFOPLIST_FILE = "UIXATMFieldDemo/UIXATMFieldDemo-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		9F0EF863174EF85F003CE728 /* Build configuration list for PBXProject "UIXATMFieldDemo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9F0EF88C174EF85F003CE728 /* Debug */,
+				9F0EF88D174EF85F003CE728 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		9F0EF88E174EF85F003CE728 /* Build configuration list for PBXNativeTarget "UIXATMFieldDemo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9F0EF88F174EF85F003CE728 /* Debug */,
+				9F0EF890174EF85F003CE728 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 9F0EF860174EF85F003CE728 /* Project object */;
+}
