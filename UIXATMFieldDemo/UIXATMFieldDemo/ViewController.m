@@ -22,20 +22,11 @@
     [super viewDidLoad];
     
     self.currencyField.mode = UIXATMFieldModeCurrentCurrency;
+    float f = 12.34;
+    self.currencyField.value = f;
     
     self.percentField.mode = UIXATMFieldModePercentage;
-    
-	// Do any additional setup after loading the view, typically from a nib.
-    
-//    self.field.clearButtonMode = UITextFieldViewModeAlways;
-//    UILabel* l = [[UILabel alloc] initWithFrame:CGRectZero];
-//    l.font = self.field.font;
-//    l.text = @"boo";
-//    [l sizeToFit];
-//    
-//    self.field.rightView = l;
-//    self.field.rightViewMode = UITextFieldViewModeAlways;
-    
+    self.percentField.decimalValue = [NSDecimalNumber decimalNumberWithString:@"87"];    
 }
 
 - (void)didReceiveMemoryWarning

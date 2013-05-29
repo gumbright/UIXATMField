@@ -27,14 +27,15 @@ typedef enum
 @interface UIXATMField : UITextField
 
 @property (nonatomic, assign) UIXATMFieldMode mode;
-@property (nonatomic, copy) NSDecimalNumber* currentDecimalValue;
-@property (nonatomic, assign) float currentValue;
+@property (nonatomic, copy) NSDecimalNumber* decimalValue;
+@property (nonatomic, assign) float value;
 
 //ignored for currency mode
 @property (nonatomic, assign) NSUInteger numDecimalDigits;
 
-//decimal points
-//currency mode
-//percentage
+//call delegate
+//verify values
+//cancel/done
+//limit perc value
 
 @end

@@ -42,10 +42,30 @@
 /////////////////////////////////////////////////////
 //
 /////////////////////////////////////////////////////
-- (id)initWithFrame:(CGRect)frame
+- (id)initWithFrame:(CGRect)frame andMode:(UIXATMFieldMode)mode
 {
     self = [super initWithFrame:frame];
-    if (self) {
+    if (self)
+    {
+        _mode = mode;
+        switch (_mode)
+        {
+            case UIXATMFieldModeCurrentCurrency:
+            {
+                [self setCurrencyMode];
+            }
+                break;
+                
+            case UIXATMFieldModePercentage:
+            {
+                [self setPercentMode];
+            }
+                break;
+                
+            default:
+                break;
+        }
+
         [self commonInit];
     }
     return self;
@@ -77,7 +97,7 @@
     
     self.formatter = [[NSNumberFormatter alloc] init];
     self.formatter.numberStyle = NSNumberFormatterCurrencyStyle;
-    
+    _numDecimalDigits = [self.formatter maximumFractionDigits];
 }
 
 /////////////////////////////////////////////////////
@@ -202,7 +222,7 @@
     }
     else
     {
-        self.text = [self.formatter stringFromNumber:self.currentDecimalValue];
+        self.text = [self.formatter stringFromNumber:self.decimalValue];
     }
 }
 
@@ -220,8 +240,6 @@
 /////////////////////////////////////////////////////
 - (void) updateCurrentValue
 {
-//    NSNumber* n = [self.formatter numberFromString:self.text];
-//    NSDecimalNumber* num = [NSDecimalNumber decimalNumberWithDecimal: [n decimalValue]];
     NSDecimalNumber* num;
     if (self.actualStringValue.length == 0)
     {
@@ -232,14 +250,41 @@
         num = [NSDecimalNumber decimalNumberWithString:self.actualStringValue];
     }
     
-    //NSDecimalNumber* num = [NSDecimalNumber decimalNumberWithDecimal:[[NSNumber numberWithInt:[self.text intValue]] decimalValue]];
     NSDecimalNumber* scale = [NSDecimalNumber decimalNumberWithDecimal:[[NSNumber numberWithInt:10] decimalValue]];
-    scale = [scale decimalNumberByRaisingToPower:[self.formatter maximumFractionDigits]];
-    self.currentDecimalValue = [num decimalNumberByDividingBy:scale];
-    double d = [self.currentDecimalValue doubleValue];
-    self.currentValue = (float) d;
-    NSLog(@"float=%f dec=%@",self.currentValue, self.currentDecimalValue);
+    scale = [scale decimalNumberByRaisingToPower:self.numDecimalDigits];
+    _decimalValue = [num decimalNumberByDividingBy:scale];
     
+    if (self.mode == UIXATMFieldModePercentage)
+    {
+        [_decimalValue decimalNumberByMultiplyingByPowerOf10:-2];
+    }
+    
+//    [self updateFloatValue];
+    
+    NSLog(@"float=%f dec=%@",self.value, self.decimalValue);
+    
+}
+
+/////////////////////////////////////////////////////
+//
+/////////////////////////////////////////////////////
+//- (void) updateFloatValue
+//{
+//    double d = [self.decimalValue doubleValue];
+//    _value = (float) d;
+//}
+
+/////////////////////////////////////////////////////
+//
+/////////////////////////////////////////////////////
+- (void) actualFromDecimal
+{
+    NSString* s = [self.decimalValue stringValue];
+    
+    NSCharacterSet* set = [[NSCharacterSet decimalDigitCharacterSet] invertedSet];
+    NSArray* arr = [s componentsSeparatedByCharactersInSet:set];
+    NSString* newActual = [arr componentsJoinedByString:@""];
+    self.actualStringValue  = newActual;
 }
 
 /////////////////////////////////////////////////////
@@ -286,5 +331,36 @@
         [self updateDisplay];
     }
     return NO;
+}
+
+/////////////////////////////////////////////////////
+//
+/////////////////////////////////////////////////////
+- (void) setValue:(float)value
+{
+    self.decimalValue = [NSDecimalNumber decimalNumberWithDecimal:[[NSNumber numberWithFloat:value] decimalValue]];
+    
+//    [self updateDisplay];
+}
+
+/////////////////////////////////////////////////////
+//
+/////////////////////////////////////////////////////
+- (float) getValue
+{
+    double d = [self.decimalValue doubleValue];
+    return (float) d;
+}
+
+/////////////////////////////////////////////////////
+//
+/////////////////////////////////////////////////////
+- (void) setDecimalValue:(NSDecimalNumber *)decimalValue
+{
+    _decimalValue = [decimalValue copy];
+    
+    [self actualFromDecimal];
+//    [self updateFloatValue];
+    [self updateDisplay];
 }
 @end
