@@ -21,6 +21,7 @@
 		9F0EF88B174EF85F003CE728 /* ViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F0EF889174EF85F003CE728 /* ViewController_iPad.xib */; };
 		9F0EF894174EFA93003CE728 /* ATMField.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F0EF893174EFA93003CE728 /* ATMField.m */; };
 		9F0EF898174F050A003CE728 /* UIXATMField.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F0EF897174F050A003CE728 /* UIXATMField.m */; };
+		E479D28B1756DE4900B9FF82 /* gauge.png in Resources */ = {isa = PBXBuildFile; fileRef = E479D28A1756DE4900B9FF82 /* gauge.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -45,6 +46,7 @@
 		9F0EF893174EFA93003CE728 /* ATMField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATMField.m; sourceTree = "<group>"; };
 		9F0EF896174F050A003CE728 /* UIXATMField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UIXATMField.h; path = ../UIXATMField.h; sourceTree = "<group>"; };
 		9F0EF897174F050A003CE728 /* UIXATMField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UIXATMField.m; path = ../UIXATMField.m; sourceTree = "<group>"; };
+		E479D28A1756DE4900B9FF82 /* gauge.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gauge.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -93,6 +95,7 @@
 		9F0EF871174EF85F003CE728 /* UIXATMFieldDemo */ = {
 			isa = PBXGroup;
 			children = (
+				E479D28A1756DE4900B9FF82 /* gauge.png */,
 				9F0EF87A174EF85F003CE728 /* AppDelegate.h */,
 				9F0EF87B174EF85F003CE728 /* AppDelegate.m */,
 				9F0EF883174EF85F003CE728 /* ViewController.h */,
@@ -194,6 +197,7 @@
 				9F0EF882174EF85F003CE728 /* Default-568h@2x.png in Resources */,
 				9F0EF888174EF85F003CE728 /* ViewController_iPhone.xib in Resources */,
 				9F0EF88B174EF85F003CE728 /* ViewController_iPad.xib in Resources */,
+				E479D28B1756DE4900B9FF82 /* gauge.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

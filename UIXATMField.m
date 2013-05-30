@@ -9,10 +9,10 @@
 #import "UIXATMField.h"
 
 @interface UIXATMField () <UITextFieldDelegate>
-@property (nonatomic, strong) NSNumberFormatter* formatter;
 @property (nonatomic, strong) NSString* actualStringValue;
 @property (nonatomic, assign) NSUInteger fractionDigits;
 @property (nonatomic, strong) NSCharacterSet* validationCharacterSet;
+//@property (nonatomic, assign) NSUInteger numDecimalDigits;
 @end
 
 @implementation UIXATMField
@@ -97,7 +97,7 @@
     
     self.formatter = [[NSNumberFormatter alloc] init];
     self.formatter.numberStyle = NSNumberFormatterCurrencyStyle;
-    _numDecimalDigits = [self.formatter maximumFractionDigits];
+//    _numDecimalDigits = [self.formatter maximumFractionDigits];
 }
 
 /////////////////////////////////////////////////////
@@ -251,7 +251,7 @@
     }
     
     NSDecimalNumber* scale = [NSDecimalNumber decimalNumberWithDecimal:[[NSNumber numberWithInt:10] decimalValue]];
-    scale = [scale decimalNumberByRaisingToPower:self.numDecimalDigits];
+    scale = [scale decimalNumberByRaisingToPower:self.formatter.minimumFractionDigits];
     _decimalValue = [num decimalNumberByDividingBy:scale];
     
     if (self.mode == UIXATMFieldModePercentage)
@@ -277,6 +277,17 @@
 /////////////////////////////////////////////////////
 //
 /////////////////////////////////////////////////////
+- (void) actualFromDisplay
+{
+    NSCharacterSet* set = [[NSCharacterSet decimalDigitCharacterSet] invertedSet];
+    NSArray* arr = [self.text componentsSeparatedByCharactersInSet:set];
+    NSString* newActual = [arr componentsJoinedByString:@""];
+    self.actualStringValue  = newActual;
+}
+
+/////////////////////////////////////////////////////
+//
+/////////////////////////////////////////////////////
 - (void) actualFromDecimal
 {
     NSString* s = [self.decimalValue stringValue];
@@ -297,7 +308,7 @@
     if ([string rangeOfCharacterFromSet:self.validationCharacterSet].location != NSNotFound)
     {
         //invalid char - dont do nothing
-        NSLog(@"Oh no you dont -- %@",string);
+    NSLog(@"Oh no you dont -- %@",string);
         return NO;
     }
     
@@ -329,6 +340,11 @@
         self.actualStringValue = [self.actualStringValue stringByReplacingCharactersInRange:modRange withString:string];
         [self updateCurrentValue];
         [self updateDisplay];
+        
+        if (self.atmFieldDelegate && [self.atmFieldDelegate respondsToSelector:@selector(UIXATMFieldChanged:)])
+        {
+            [self.atmFieldDelegate  UIXATMFieldChanged:self];
+        }
     }
     return NO;
 }
@@ -359,8 +375,17 @@
 {
     _decimalValue = [decimalValue copy];
     
-    [self actualFromDecimal];
-//    [self updateFloatValue];
     [self updateDisplay];
+//    [self actualFromDecimal];
+    [self actualFromDisplay];
+//    [self updateFloatValue];
+}
+
+/////////////////////////////////////////////////////
+//
+/////////////////////////////////////////////////////
+- (void) setCustomFormatter:(NSNumberFormatter *)formatter
+{
+    self.formatter = formatter;
 }
 @end
