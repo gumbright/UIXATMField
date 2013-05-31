@@ -8,12 +8,12 @@
 
 //going to split the modes out to separate classes at some point
 
-typedef enum
-{
-    UIXATMFieldModeCustom=0,
-    UIXATMFieldModeCurrentCurrency,
-    UIXATMFieldModePercentage
-} UIXATMFieldMode;
+//typedef enum
+//{
+//    UIXATMFieldModeCustom=0,
+//    UIXATMFieldModeCurrentCurrency,
+//    UIXATMFieldModePercentage
+//} UIXATMFieldMode;
 
 #import <UIKit/UIKit.h>
 
@@ -23,21 +23,33 @@ typedef enum
 
 - (void) UIXATMFieldChanged:(UIXATMField*) atmField;
 
+- (void) UIXATMFFieldDonePressed:(UIXATMField*) atmField;
+- (void) UIXATMFieldCancelPressed:(UIXATMField*) atmField;
+
 @end 
 
 
 @interface UIXATMField : UITextField
 
-@property (nonatomic, assign) UIXATMFieldMode mode;
+//@property (nonatomic, assign) UIXATMFieldMode mode;
 @property (nonatomic, copy) NSDecimalNumber* decimalValue;
 @property (nonatomic, assign) float value;
 @property (nonatomic, weak) NSObject<UIXATMFieldDelegate>* atmFieldDelegate;
+
+//ignored for iPad
+@property (nonatomic, assign) BOOL showDone;
+@property (nonatomic, assign) BOOL showCancel;
+
 //@property (nonatomic, readonly) NSNumberFormatter* formatter;
 @property (nonatomic, strong) NSNumberFormatter* formatter;
 
-- (void) setCustomFormatter:(NSNumberFormatter*) formatter;
-//verify values
 //cancel/done
 //limit perc value
 
+@end
+
+@interface UIXCurrencyATMField : UIXATMField
+@end
+
+@interface UIXPercentageATMField : UIXATMField
 @end

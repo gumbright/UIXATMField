@@ -11,9 +11,9 @@
 
 @interface ViewController () <UIXATMFieldDelegate>
 
-@property (nonatomic, weak) IBOutlet UIXATMField* currencyField;
-@property (nonatomic, weak) IBOutlet UIXATMField* percentField;
-@property (nonatomic, weak) IBOutlet UIXATMField* percentField2;
+@property (nonatomic, weak) IBOutlet UIXCurrencyATMField* currencyField;
+@property (nonatomic, weak) IBOutlet UIXPercentageATMField* percentField;
+@property (nonatomic, weak) IBOutlet UIXPercentageATMField* percentField2;
 @property (nonatomic, weak) IBOutlet UIXATMField* customField;
 
 @end
@@ -25,17 +25,17 @@
     [super viewDidLoad];
     
     //currency
-    self.currencyField.mode = UIXATMFieldModeCurrentCurrency;
+//    self.currencyField.mode = UIXATMFieldModeCurrentCurrency;
 //    float f = 12.34;
-//    self.currencyField.value = f;
+//    self.currencyField.value = 12.34;
     self.currencyField.atmFieldDelegate = self;
     
     //percentage
-    self.percentField.mode = UIXATMFieldModePercentage;
+//    self.percentField.mode = UIXATMFieldModePercentage;
     self.percentField.decimalValue = [NSDecimalNumber decimalNumberWithString:@"87"];
     
     //percentage
-    self.percentField2.mode = UIXATMFieldModePercentage;
+//    self.percentField2.mode = UIXATMFieldModePercentage;
     self.percentField2.formatter.minimumFractionDigits = 3;
     self.percentField2.formatter.maximumFractionDigits = 3;
     self.percentField2.decimalValue = [NSDecimalNumber decimalNumberWithString:@"23"];

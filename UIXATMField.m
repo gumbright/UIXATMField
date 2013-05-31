@@ -8,6 +8,8 @@
 
 #import "UIXATMField.h"
 
+static UIToolbar* sInputAccessoryView;
+
 @interface UIXATMField () <UITextFieldDelegate>
 @property (nonatomic, strong) NSString* actualStringValue;
 @property (nonatomic, assign) NSUInteger fractionDigits;
@@ -16,6 +18,54 @@
 @end
 
 @implementation UIXATMField
+
+/////////////////////////////////////////////////////
+//
+/////////////////////////////////////////////////////
++ (void) initialize
+{
+    sInputAccessoryView = [[UIToolbar alloc]initWithFrame:CGRectMake(0, 0, 320, 50)];
+    sInputAccessoryView.barStyle = UIBarStyleBlackTranslucent;
+    sInputAccessoryView.items = [NSArray arrayWithObjects:
+                               [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil],
+                               [[UIBarButtonItem alloc]initWithTitle:@"Done" style:UIBarButtonItemStyleDone target:self action:@selector(doneWithNumberPad)],
+                               nil];
+    [sInputAccessoryView sizeToFit];
+    
+    //to use
+    //    self.edit.inputAccessoryView = sNumberPadToolbar;
+
+}
+
+/////////////////////////////////////////////////////
+//
+/////////////////////////////////////////////////////
+- (void) configureInputAccessoryView
+{
+    NSMutableArray* items = [NSMutableArray arrayWithCapacity:3];
+    
+    if (self.showCancel)
+    {
+        [items addObject:[[UIBarButtonItem alloc]initWithTitle:@"Cancel"
+                                                         style:UIBarButtonItemStyleDone
+                                                        target:self
+                                                        action:@selector(accessoryCancelPressed:)]];
+    }
+    
+    [items addObject:[[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
+                                                                  target:nil
+                                                                  action:nil]];
+    
+    if (self.showDone)
+    {
+        [items addObject:[[UIBarButtonItem alloc]initWithTitle:@"Done"
+                                                         style:UIBarButtonItemStyleDone
+                                                        target:self
+                                                        action:@selector(doneWithNumberPad)]];
+    }
+    sInputAccessoryView.items = items;
+    
+}
 
 /////////////////////////////////////////////////////
 //
@@ -35,41 +85,40 @@
     self.fractionDigits = 0;
     
     self.validationCharacterSet = [[NSCharacterSet decimalDigitCharacterSet] invertedSet];
-    
-    [self contentChanged:nil];
+    self.value = 0;
 }
 
 /////////////////////////////////////////////////////
 //
 /////////////////////////////////////////////////////
-- (id)initWithFrame:(CGRect)frame andMode:(UIXATMFieldMode)mode
-{
-    self = [super initWithFrame:frame];
-    if (self)
-    {
-        _mode = mode;
-        switch (_mode)
-        {
-            case UIXATMFieldModeCurrentCurrency:
-            {
-                [self setCurrencyMode];
-            }
-                break;
-                
-            case UIXATMFieldModePercentage:
-            {
-                [self setPercentMode];
-            }
-                break;
-                
-            default:
-                break;
-        }
-
-        [self commonInit];
-    }
-    return self;
-}
+//- (id)initWithFrame:(CGRect)frame andMode:(UIXATMFieldMode)mode
+//{
+//    self = [super initWithFrame:frame];
+//    if (self)
+//    {
+//        _mode = mode;
+//        switch (_mode)
+//        {
+//            case UIXATMFieldModeCurrentCurrency:
+//            {
+//                [self setCurrencyMode];
+//            }
+//                break;
+//                
+//            case UIXATMFieldModePercentage:
+//            {
+//                [self setPercentMode];
+//            }
+//                break;
+//                
+//            default:
+//                break;
+//        }
+//
+//        [self commonInit];
+//    }
+//    return self;
+//}
 
 /////////////////////////////////////////////////////
 //
@@ -90,64 +139,64 @@
 /////////////////////////////////////////////////////
 //
 /////////////////////////////////////////////////////
-- (void) setCurrencyMode
-{
-    self.keyboardType = UIKeyboardTypeNumberPad;
-    self.rightView = nil;
-    
-    self.formatter = [[NSNumberFormatter alloc] init];
-    self.formatter.numberStyle = NSNumberFormatterCurrencyStyle;
-//    _numDecimalDigits = [self.formatter maximumFractionDigits];
-}
+//- (void) setCurrencyMode
+//{
+//    self.keyboardType = UIKeyboardTypeNumberPad;
+//    self.rightView = nil;
+//    
+//    self.formatter = [[NSNumberFormatter alloc] init];
+//    self.formatter.numberStyle = NSNumberFormatterCurrencyStyle;
+////    _numDecimalDigits = [self.formatter maximumFractionDigits];
+//}
 
 /////////////////////////////////////////////////////
 //
 /////////////////////////////////////////////////////
-- (void) setPercentMode
-{
-    self.keyboardType = UIKeyboardTypeNumberPad;
-    
-    UILabel* l = [[UILabel alloc] initWithFrame:CGRectZero];
-    l.text = @"%";
-    l.font = self.font;
-    l.textColor = self.textColor;
-    l.backgroundColor = [UIColor clearColor];  //black box if set to bg of self
-    [l sizeToFit];
-    self.rightView = l;
-    self.rightViewMode = UITextFieldViewModeAlways;
-    
-    self.formatter = [[NSNumberFormatter alloc] init];
-    self.formatter.numberStyle = NSNumberFormatterDecimalStyle;
-    self.formatter.maximumFractionDigits = self.fractionDigits;
-}
+//- (void) setPercentMode
+//{
+//    self.keyboardType = UIKeyboardTypeNumberPad;
+//    
+//    UILabel* l = [[UILabel alloc] initWithFrame:CGRectZero];
+//    l.text = @"%";
+//    l.font = self.font;
+//    l.textColor = self.textColor;
+//    l.backgroundColor = [UIColor clearColor];  //black box if set to bg of self
+//    [l sizeToFit];
+//    self.rightView = l;
+//    self.rightViewMode = UITextFieldViewModeAlways;
+//    
+//    self.formatter = [[NSNumberFormatter alloc] init];
+//    self.formatter.numberStyle = NSNumberFormatterDecimalStyle;
+//    self.formatter.maximumFractionDigits = self.fractionDigits;
+//}
 
 /////////////////////////////////////////////////////
 //
 /////////////////////////////////////////////////////
-- (void) setMode:(UIXATMFieldMode)mode
-{
-    _mode = mode;
-    
-    switch (_mode)
-    {
-        case UIXATMFieldModeCurrentCurrency:
-        {
-            [self setCurrencyMode];
-        }
-            break;
-            
-        case UIXATMFieldModePercentage:
-        {
-            [self setPercentMode];
-        }
-            break;
-            
-        default:
-            break;
-    }
-    [self updateCurrentValue];
-    [self updateDisplay];
-}
+//- (void) setMode:(UIXATMFieldMode)mode
+//{
+//    _mode = mode;
+//    
+//    switch (_mode)
+//    {
+//        case UIXATMFieldModeCurrentCurrency:
+//        {
+//            [self setCurrencyMode];
+//        }
+//            break;
+//            
+//        case UIXATMFieldModePercentage:
+//        {
+//            [self setPercentMode];
+//        }
+//            break;
+//            
+//        default:
+//            break;
+//    }
+//    [self updateCurrentValue];
+//    [self updateDisplay];
+//}
 
 /*
 // Only override drawRect: if you perform custom drawing.
@@ -158,72 +207,19 @@
 }
 */
 
-/////////////////////////////////////////////////////
-//
-/////////////////////////////////////////////////////
-
-////////////////////////////////////////////////////////////
-//
-////////////////////////////////////////////////////////////
-//- (void) setDecimalValue:(NSDecimalNumber *)decValue
-//{
-//    NSDecimalNumber* scale = [NSDecimalNumber decimalNumberWithDecimal:[[NSNumber numberWithInt:10] decimalValue]];
-//    scale = [scale decimalNumberByRaisingToPower:[self.formatter maximumFractionDigits]];
-//    NSDecimalNumber* num = [decValue decimalNumberByMultiplyingBy:scale];
-//    
-//    self.entryField.text = [num stringValue];
-//    [self updateDisplay];
-//    
-//}
-
-////////////////////////////////////////////////////////////
-//
-////////////////////////////////////////////////////////////
-//- (NSDecimalNumber*) decimalValue
-//{
-//    NSDecimalNumber* num = [NSDecimalNumber decimalNumberWithDecimal:[[NSNumber numberWithInt:[self.entryField.text intValue]] decimalValue]];
-//    NSDecimalNumber* scale = [NSDecimalNumber decimalNumberWithDecimal:[[NSNumber numberWithInt:10] decimalValue]];
-//    scale = [scale decimalNumberByRaisingToPower:[self.formatter maximumFractionDigits]];
-//    num = [num decimalNumberByDividingBy:scale];
-//    
-//    return num;
-//}
-
-////////////////////////////////////////////////////////////
-//
-////////////////////////////////////////////////////////////
-//- (NSDecimalNumber*) floatToAppropriateNSDecimalNumber:(float) value
-//{
-//    NSString* floatString = [NSString stringWithFormat:@"%f",value];
-//    NSDecimalNumberHandler *roundingBehavior = [NSDecimalNumberHandler decimalNumberHandlerWithRoundingMode:NSRoundPlain
-//                                                                                                      scale:[self.formatter maximumFractionDigits]
-//                                                                                           raiseOnExactness:FALSE
-//                                                                                            raiseOnOverflow:TRUE
-//                                                                                           raiseOnUnderflow:TRUE
-//                                                                                        raiseOnDivideByZero:TRUE];
-//    
-//    [self.formatter setNumberStyle:NSNumberFormatterNoStyle];
-//    NSNumber* n = [self.formatter numberFromString:floatString];
-//    [self.formatter setNumberStyle:NSNumberFormatterCurrencyStyle];
-//    NSDecimalNumber *decimalNumber = [NSDecimalNumber decimalNumberWithDecimal:[n decimalValue]];
-//    
-//    NSDecimalNumber *roundedDecimalNumber = [decimalNumber decimalNumberByRoundingAccordingToBehavior:roundingBehavior];
-//    return roundedDecimalNumber;
-//}
-
 ////////////////////////////////////////////////////////////
 //
 ////////////////////////////////////////////////////////////
 - (void) updateDisplay
 {
-    if (self.text.length == 0)
-    {
-        self.text = [self.formatter stringFromNumber:[NSNumber numberWithFloat:0.0]];
-    }
-    else
-    {
+//    if (self.text.length == 0)
+//    {
+//        self.text = [self.formatter stringFromNumber:[NSNumber numberWithFloat:0.0]];
+//    }
+//    else
+//    {
         self.text = [self.formatter stringFromNumber:self.decimalValue];
-    }
+//    }
 }
 
 ////////////////////////////////////////////////////////////
@@ -254,10 +250,10 @@
     scale = [scale decimalNumberByRaisingToPower:self.formatter.minimumFractionDigits];
     _decimalValue = [num decimalNumberByDividingBy:scale];
     
-    if (self.mode == UIXATMFieldModePercentage)
-    {
-        [_decimalValue decimalNumberByMultiplyingByPowerOf10:-2];
-    }
+//    if (self.mode == UIXATMFieldModePercentage)
+//    {
+//        [_decimalValue decimalNumberByMultiplyingByPowerOf10:-2];
+//    }
     
 //    [self updateFloatValue];
     
@@ -279,10 +275,17 @@
 /////////////////////////////////////////////////////
 - (void) actualFromDisplay
 {
-    NSCharacterSet* set = [[NSCharacterSet decimalDigitCharacterSet] invertedSet];
-    NSArray* arr = [self.text componentsSeparatedByCharactersInSet:set];
-    NSString* newActual = [arr componentsJoinedByString:@""];
-    self.actualStringValue  = newActual;
+    if ([self.decimalValue floatValue] == 0.0)
+    {
+        self.actualStringValue = @"";
+    }
+    else
+    {
+        NSCharacterSet* set = [[NSCharacterSet decimalDigitCharacterSet] invertedSet];
+        NSArray* arr = [self.text componentsSeparatedByCharactersInSet:set];
+        NSString* newActual = [arr componentsJoinedByString:@""];
+        self.actualStringValue  = newActual;
+    }
 }
 
 /////////////////////////////////////////////////////
@@ -296,6 +299,20 @@
     NSArray* arr = [s componentsSeparatedByCharactersInSet:set];
     NSString* newActual = [arr componentsJoinedByString:@""];
     self.actualStringValue  = newActual;
+}
+
+/////////////////////////////////////////////////////
+//
+/////////////////////////////////////////////////////
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
+{
+    if (self.showCancel || self.showDone)
+    {
+        [self configureInputAccessoryView];
+        self.inputAccessoryView = sInputAccessoryView;
+    }
+    
+    return YES;
 }
 
 /////////////////////////////////////////////////////
@@ -389,3 +406,100 @@
     self.formatter = formatter;
 }
 @end
+
+#pragma mark UIXCurrencyATMField
+@implementation UIXCurrencyATMField
+
+/////////////////////////////////////////////////////
+//
+/////////////////////////////////////////////////////
+- (void) commonInit
+{
+    [super commonInit];
+    self.keyboardType = UIKeyboardTypeNumberPad;
+    self.rightView = nil;
+    
+    self.formatter = [[NSNumberFormatter alloc] init];
+    self.formatter.numberStyle = NSNumberFormatterCurrencyStyle;
+    self.value = 0;
+}
+
+/////////////////////////////////////////////////////
+//
+/////////////////////////////////////////////////////
+- (id)initWithFrame:(CGRect)frame
+{
+    self = [super initWithFrame:frame];
+    if (self)
+    {
+        [self commonInit];
+    }
+    return self;
+}
+
+/////////////////////////////////////////////////////
+//
+/////////////////////////////////////////////////////
+- (void) awakeFromNib
+{
+    [self commonInit];
+}
+
+/////////////////////////////////////////////////////
+//
+/////////////////////////////////////////////////////
+- (void) updateCurrentValue
+{
+    [super updateCurrentValue];
+    [self.decimalValue decimalNumberByMultiplyingByPowerOf10:-2];
+}
+
+@end
+
+#pragma mark UIXPercentageATMField
+@implementation UIXPercentageATMField
+
+/////////////////////////////////////////////////////
+//
+/////////////////////////////////////////////////////
+- (void) commonInit
+{
+    [super commonInit];
+    self.keyboardType = UIKeyboardTypeNumberPad;
+    
+    UILabel* l = [[UILabel alloc] initWithFrame:CGRectZero];
+    l.text = @"%";
+    l.font = self.font;
+    l.textColor = self.textColor;
+    l.backgroundColor = [UIColor clearColor];  //black box if set to bg of self
+    [l sizeToFit];
+    self.rightView = l;
+    self.rightViewMode = UITextFieldViewModeAlways;
+    
+    self.formatter = [[NSNumberFormatter alloc] init];
+    self.formatter.numberStyle = NSNumberFormatterDecimalStyle;
+    self.formatter.maximumFractionDigits = self.fractionDigits;
+}
+
+/////////////////////////////////////////////////////
+//
+/////////////////////////////////////////////////////
+- (id)initWithFrame:(CGRect)frame
+{
+    self = [super initWithFrame:frame];
+    if (self)
+    {
+        [self commonInit];
+    }
+    return self;
+}
+
+/////////////////////////////////////////////////////
+//
+/////////////////////////////////////////////////////
+- (void) awakeFromNib
+{
+    [self commonInit];
+}
+@end
+
