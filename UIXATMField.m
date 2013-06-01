@@ -26,10 +26,6 @@ static UIToolbar* sInputAccessoryView;
 {
     sInputAccessoryView = [[UIToolbar alloc]initWithFrame:CGRectMake(0, 0, 320, 50)];
     sInputAccessoryView.barStyle = UIBarStyleBlackTranslucent;
-    sInputAccessoryView.items = [NSArray arrayWithObjects:
-                               [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil],
-                               [[UIBarButtonItem alloc]initWithTitle:@"Done" style:UIBarButtonItemStyleDone target:self action:@selector(doneWithNumberPad)],
-                               nil];
     [sInputAccessoryView sizeToFit];
     
     //to use
@@ -61,7 +57,7 @@ static UIToolbar* sInputAccessoryView;
         [items addObject:[[UIBarButtonItem alloc]initWithTitle:@"Done"
                                                          style:UIBarButtonItemStyleDone
                                                         target:self
-                                                        action:@selector(doneWithNumberPad)]];
+                                                        action:@selector(accessoryDonePressed:)]];
     }
     sInputAccessoryView.items = items;
     
@@ -405,6 +401,29 @@ static UIToolbar* sInputAccessoryView;
 {
     self.formatter = formatter;
 }
+
+/////////////////////////////////////////////////////
+//
+/////////////////////////////////////////////////////
+- (IBAction) accessoryDonePressed:(id)sender
+{
+    if (self.atmFieldDelegate && [self.atmFieldDelegate respondsToSelector:@selector(UIXATMFieldDonePressed:)])
+    {
+        [self.atmFieldDelegate UIXATMFieldDonePressed:self];
+    }
+}
+
+/////////////////////////////////////////////////////
+//
+/////////////////////////////////////////////////////
+- (IBAction) accessoryCancelPressed:(id)sender
+{
+    if (self.atmFieldDelegate && [self.atmFieldDelegate respondsToSelector:@selector(UIXATMFieldCancelPressed:)])
+    {
+        [self.atmFieldDelegate UIXATMFieldCancelPressed:self];
+    }
+}
+
 @end
 
 #pragma mark UIXCurrencyATMField
@@ -501,5 +520,6 @@ static UIToolbar* sInputAccessoryView;
 {
     [self commonInit];
 }
+
 @end
 

@@ -23,7 +23,7 @@
 
 - (void) UIXATMFieldChanged:(UIXATMField*) atmField;
 
-- (void) UIXATMFFieldDonePressed:(UIXATMField*) atmField;
+- (void) UIXATMFieldDonePressed:(UIXATMField*) atmField;
 - (void) UIXATMFieldCancelPressed:(UIXATMField*) atmField;
 
 @end 
@@ -43,7 +43,6 @@
 //@property (nonatomic, readonly) NSNumberFormatter* formatter;
 @property (nonatomic, strong) NSNumberFormatter* formatter;
 
-//cancel/done
 //limit perc value
 
 @end

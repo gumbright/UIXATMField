@@ -14,6 +14,7 @@
 @property (nonatomic, weak) IBOutlet UIXCurrencyATMField* currencyField;
 @property (nonatomic, weak) IBOutlet UIXPercentageATMField* percentField;
 @property (nonatomic, weak) IBOutlet UIXPercentageATMField* percentField2;
+@property (nonatomic, weak) IBOutlet UIXCurrencyATMField* accessoryField;
 @property (nonatomic, weak) IBOutlet UIXATMField* customField;
 
 @end
@@ -49,6 +50,10 @@
     self.customField.formatter = fmt;
     self.customField.decimalValue = [NSDecimalNumber zero];
     
+    self.accessoryField.showCancel = YES;
+    self.accessoryField.showDone = YES;
+    self.accessoryField.atmFieldDelegate = self;
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -60,5 +65,15 @@
 - (void) UIXATMFieldChanged:(UIXATMField *)atmField
 {
     NSLog(@"changed");
+}
+
+- (void) UIXATMFieldDonePressed:(UIXATMField*) atmField
+{
+    [atmField resignFirstResponder];
+}
+
+- (void) UIXATMFieldCancelPressed:(UIXATMField*) atmField
+{
+    [atmField resignFirstResponder];
 }
 @end
