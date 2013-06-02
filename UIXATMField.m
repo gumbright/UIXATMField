@@ -214,7 +214,7 @@ static UIToolbar* sInputAccessoryView;
 //    }
 //    else
 //    {
-        self.text = [self.formatter stringFromNumber:self.decimalValue];
+        self.text = [self.formatter stringFromNumber:_decimalValue];
 //    }
 }
 
@@ -232,29 +232,46 @@ static UIToolbar* sInputAccessoryView;
 /////////////////////////////////////////////////////
 - (void) updateCurrentValue
 {
+//    NSDecimalNumber* num;
+//    if (self.actualStringValue.length == 0)
+//    {
+//        num = [NSDecimalNumber zero];
+//    }
+//    else
+//    {
+//        num = [NSDecimalNumber decimalNumberWithString:self.actualStringValue];
+//    }
+//    
+//    NSDecimalNumber* scale = [NSDecimalNumber decimalNumberWithDecimal:[[NSNumber numberWithInt:10] decimalValue]];
+//    scale = [scale decimalNumberByRaisingToPower:self.formatter.minimumFractionDigits];
+//    _decimalValue = [num decimalNumberByDividingBy:scale];
+    
+    _decimalValue = [self decimalNumberFromString:self.actualStringValue];
+    
+    NSLog(@"float=%f dec=%@",self.value, self.decimalValue);
+    
+}
+
+/////////////////////////////////////////////////////
+//
+/////////////////////////////////////////////////////
+- (NSDecimalNumber*) decimalNumberFromString:(NSString*) string
+{
     NSDecimalNumber* num;
-    if (self.actualStringValue.length == 0)
+
+    if (string.length == 0)
     {
         num = [NSDecimalNumber zero];
     }
     else
     {
-        num = [NSDecimalNumber decimalNumberWithString:self.actualStringValue];
+        num = [NSDecimalNumber decimalNumberWithString:string];
     }
     
     NSDecimalNumber* scale = [NSDecimalNumber decimalNumberWithDecimal:[[NSNumber numberWithInt:10] decimalValue]];
     scale = [scale decimalNumberByRaisingToPower:self.formatter.minimumFractionDigits];
-    _decimalValue = [num decimalNumberByDividingBy:scale];
-    
-//    if (self.mode == UIXATMFieldModePercentage)
-//    {
-//        [_decimalValue decimalNumberByMultiplyingByPowerOf10:-2];
-//    }
-    
-//    [self updateFloatValue];
-    
-    NSLog(@"float=%f dec=%@",self.value, self.decimalValue);
-    
+    num = [num decimalNumberByDividingBy:scale];
+    return num;
 }
 
 /////////////////////////////////////////////////////
@@ -271,7 +288,7 @@ static UIToolbar* sInputAccessoryView;
 /////////////////////////////////////////////////////
 - (void) actualFromDisplay
 {
-    if ([self.decimalValue floatValue] == 0.0)
+    if ([_decimalValue floatValue] == 0.0)
     {
         self.actualStringValue = @"";
     }
@@ -314,6 +331,14 @@ static UIToolbar* sInputAccessoryView;
 /////////////////////////////////////////////////////
 //
 /////////////////////////////////////////////////////
+- (BOOL) shouldChangeValueTo:(NSDecimalNumber*) newValue
+{
+    return YES;
+}
+
+/////////////////////////////////////////////////////
+//
+/////////////////////////////////////////////////////
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
     //first lets make sure we have no inappropriate characters
@@ -350,13 +375,32 @@ static UIToolbar* sInputAccessoryView;
     if (update)
     {
         NSLog(@"range=%@ repl=<%@> -- modRange=%@ currentText=%@ actual=%@",NSStringFromRange(range),string,NSStringFromRange(modRange),self.text,self.actualStringValue);
-        self.actualStringValue = [self.actualStringValue stringByReplacingCharactersInRange:modRange withString:string];
-        [self updateCurrentValue];
-        [self updateDisplay];
+//        self.actualStringValue = [self.actualStringValue stringByReplacingCharactersInRange:modRange withString:string];
         
-        if (self.atmFieldDelegate && [self.atmFieldDelegate respondsToSelector:@selector(UIXATMFieldChanged:)])
+        NSString* proposedActualStringValue = [self.actualStringValue stringByReplacingCharactersInRange:modRange
+                                                                                              withString:string];
+        NSDecimalNumber* proposedValue = [self decimalNumberFromString:proposedActualStringValue];
+        
+        if ([self shouldChangeValueTo:proposedValue])
         {
-            [self.atmFieldDelegate  UIXATMFieldChanged:self];
+            BOOL valueValid = YES;
+            if (self.atmFieldDelegate && [self.atmFieldDelegate respondsToSelector:@selector(UIXATMField:shouldChangeValueTo:)])
+            {
+                valueValid = [self.atmFieldDelegate UIXATMField:self
+                                            shouldChangeValueTo:proposedValue];
+            }
+            
+            if (valueValid)
+            {
+                self.actualStringValue = proposedActualStringValue;
+                [self updateCurrentValue];
+                [self updateDisplay];
+                
+                if (self.atmFieldDelegate && [self.atmFieldDelegate respondsToSelector:@selector(UIXATMFieldChanged:)])
+                {
+                    [self.atmFieldDelegate  UIXATMFieldChanged:self];
+                }
+            }
         }
     }
     return NO;
@@ -464,14 +508,16 @@ static UIToolbar* sInputAccessoryView;
     [self commonInit];
 }
 
+
 /////////////////////////////////////////////////////
 //
 /////////////////////////////////////////////////////
-- (void) updateCurrentValue
-{
-    [super updateCurrentValue];
-    [self.decimalValue decimalNumberByMultiplyingByPowerOf10:-2];
-}
+//- (void) updateCurrentValue
+//{
+//    [super updateCurrentValue];
+//    [self.decimalValue decimalNumberByMultiplyingByPowerOf10:-2];
+//}
+
 
 @end
 
@@ -521,5 +567,32 @@ static UIToolbar* sInputAccessoryView;
     [self commonInit];
 }
 
+/////////////////////////////////////////////////////
+//
+/////////////////////////////////////////////////////
+- (BOOL) shouldChangeValueTo:(NSDecimalNumber*) newValue
+{
+    if ([newValue floatValue] < 0 || [newValue floatValue] > 100)
+    {
+        return NO;
+    }
+    return YES;
+}
+
+/////////////////////////////////////////////////////
+//
+/////////////////////////////////////////////////////
+//- (NSDecimalNumber*) decimalNumberFromString:(NSString*) string
+//{
+//    return [[super decimalNumberFromString:string] decimalNumberByMultiplyingByPowerOf10:-2];
+//}
+
+/////////////////////////////////////////////////////
+//
+/////////////////////////////////////////////////////
+- (NSDecimalNumber*) decimalValue
+{
+    return [[super decimalValue] decimalNumberByMultiplyingByPowerOf10:-2];
+}
 @end
 
