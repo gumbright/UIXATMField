@@ -16,6 +16,7 @@
 @property (nonatomic, weak) IBOutlet UIXPercentageATMField* percentField2;
 @property (nonatomic, weak) IBOutlet UIXCurrencyATMField* accessoryField;
 @property (nonatomic, weak) IBOutlet UIXATMField* customField;
+@property (nonatomic, weak) IBOutlet UIXUnfixedDecimalATMField* unfixedField;
 
 @end
 
@@ -53,6 +54,15 @@
     self.accessoryField.showCancel = YES;
     self.accessoryField.showDone = YES;
     self.accessoryField.atmFieldDelegate = self;
+    
+    UILabel* l = [[UILabel alloc] initWithFrame:CGRectZero];
+    l.text = self.customField.formatter.percentSymbol;
+    l.font = self.unfixedField.font;
+    l.textColor = self.unfixedField.textColor;
+    [l sizeToFit];
+    self.unfixedField.rightView = l;
+    self.unfixedField.rightViewMode = UITextFieldViewModeAlways;
+    self.unfixedField.value = 54.3;
     
 }
 

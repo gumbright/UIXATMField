@@ -54,3 +54,8 @@
 
 @interface UIXPercentageATMField : UIXATMField
 @end
+
+
+//!!!in progress/experimental, dont use
+@interface UIXUnfixedDecimalATMField : UIXATMField
+@end
