@@ -26,7 +26,7 @@
 - (void) UIXATMFieldDonePressed:(UIXATMField*) atmField;
 - (void) UIXATMFieldCancelPressed:(UIXATMField*) atmField;
 
-- (BOOL) UIXATMField:(UIXATMField*) atmField shouldChangeValueTo:(NSDecimalNumber*) newValue;
+- (BOOL) UIXATMField:(UIXATMField*) atmField shouldChangeValueTo:(NSDecimalNumber*) newValue; 
 
 @end 
 

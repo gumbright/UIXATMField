@@ -19,9 +19,8 @@
 		9F0EF885174EF85F003CE728 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F0EF884174EF85F003CE728 /* ViewController.m */; };
 		9F0EF888174EF85F003CE728 /* ViewController_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F0EF886174EF85F003CE728 /* ViewController_iPhone.xib */; };
 		9F0EF88B174EF85F003CE728 /* ViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F0EF889174EF85F003CE728 /* ViewController_iPad.xib */; };
-		9F0EF894174EFA93003CE728 /* ATMField.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F0EF893174EFA93003CE728 /* ATMField.m */; };
-		9F0EF898174F050A003CE728 /* UIXATMField.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F0EF897174F050A003CE728 /* UIXATMField.m */; };
 		E479D28B1756DE4900B9FF82 /* gauge.png in Resources */ = {isa = PBXBuildFile; fileRef = E479D28A1756DE4900B9FF82 /* gauge.png */; };
+		E4A19598175CF8A800675AD7 /* UIXATMField.m in Sources */ = {isa = PBXBuildFile; fileRef = E4A19597175CF8A800675AD7 /* UIXATMField.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,11 +41,9 @@
 		9F0EF884174EF85F003CE728 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		9F0EF887174EF85F003CE728 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ViewController_iPhone.xib; sourceTree = "<group>"; };
 		9F0EF88A174EF85F003CE728 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ViewController_iPad.xib; sourceTree = "<group>"; };
-		9F0EF892174EFA93003CE728 /* ATMField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATMField.h; sourceTree = "<group>"; };
-		9F0EF893174EFA93003CE728 /* ATMField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATMField.m; sourceTree = "<group>"; };
-		9F0EF896174F050A003CE728 /* UIXATMField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UIXATMField.h; path = ../UIXATMField.h; sourceTree = "<group>"; };
-		9F0EF897174F050A003CE728 /* UIXATMField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UIXATMField.m; path = ../UIXATMField.m; sourceTree = "<group>"; };
 		E479D28A1756DE4900B9FF82 /* gauge.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gauge.png; sourceTree = "<group>"; };
+		E4A19596175CF8A800675AD7 /* UIXATMField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIXATMField.h; sourceTree = "<group>"; };
+		E4A19597175CF8A800675AD7 /* UIXATMField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIXATMField.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,8 +63,7 @@
 		9F0EF85F174EF85F003CE728 = {
 			isa = PBXGroup;
 			children = (
-				9F0EF895174F04C2003CE728 /* UIXATMField */,
-				9F0EF891174EFA93003CE728 /* ATMField */,
+				E4A19595175CF8A800675AD7 /* UIXATMField */,
 				9F0EF871174EF85F003CE728 /* UIXATMFieldDemo */,
 				9F0EF86A174EF85F003CE728 /* Frameworks */,
 				9F0EF869174EF85F003CE728 /* Products */,
@@ -121,23 +117,14 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		9F0EF891174EFA93003CE728 /* ATMField */ = {
+		E4A19595175CF8A800675AD7 /* UIXATMField */ = {
 			isa = PBXGroup;
 			children = (
-				9F0EF892174EFA93003CE728 /* ATMField.h */,
-				9F0EF893174EFA93003CE728 /* ATMField.m */,
-			);
-			name = ATMField;
-			path = ../UIXATMField;
-			sourceTree = "<group>";
-		};
-		9F0EF895174F04C2003CE728 /* UIXATMField */ = {
-			isa = PBXGroup;
-			children = (
-				9F0EF896174F050A003CE728 /* UIXATMField.h */,
-				9F0EF897174F050A003CE728 /* UIXATMField.m */,
+				E4A19596175CF8A800675AD7 /* UIXATMField.h */,
+				E4A19597175CF8A800675AD7 /* UIXATMField.m */,
 			);
 			name = UIXATMField;
+			path = ../UIXATMField;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -211,8 +198,7 @@
 				9F0EF878174EF85F003CE728 /* main.m in Sources */,
 				9F0EF87C174EF85F003CE728 /* AppDelegate.m in Sources */,
 				9F0EF885174EF85F003CE728 /* ViewController.m in Sources */,
-				9F0EF894174EFA93003CE728 /* ATMField.m in Sources */,
-				9F0EF898174F050A003CE728 /* UIXATMField.m in Sources */,
+				E4A19598175CF8A800675AD7 /* UIXATMField.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
