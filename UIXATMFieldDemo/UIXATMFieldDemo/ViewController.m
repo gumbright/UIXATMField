@@ -17,6 +17,8 @@
 @property (nonatomic, weak) IBOutlet UIXCurrencyATMField* accessoryField;
 @property (nonatomic, weak) IBOutlet UIXATMField* customField;
 @property (nonatomic, weak) IBOutlet UIXUnfixedDecimalATMField* unfixedField;
+@property (nonatomic, weak) IBOutlet UIView* dynamicContainer;
+@property (nonatomic, strong) UIXATMField* dynamicField;
 
 @end
 
@@ -64,6 +66,12 @@
     self.unfixedField.rightViewMode = UITextFieldViewModeAlways;
     self.unfixedField.value = 54.3;
     
+    self.dynamicField = [[UIXATMField alloc] initWithFrame:self.dynamicContainer.bounds];
+    fmt = [[NSNumberFormatter alloc] init];
+    fmt.positiveFormat = @"$#,##0";
+    self.dynamicField.formatter = fmt;
+    self.dynamicField.decimalValue = [NSDecimalNumber zero];
+    [self.dynamicContainer addSubview:self.dynamicField];
 }
 
 - (void)didReceiveMemoryWarning

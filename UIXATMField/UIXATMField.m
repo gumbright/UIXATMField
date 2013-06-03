@@ -65,6 +65,7 @@ static UIToolbar* sInputAccessoryView;
 - (void) commonInit
 {
     self.textAlignment = NSTextAlignmentRight;
+    self.borderStyle = UITextBorderStyleRoundedRect;
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(contentChanged:)
@@ -78,6 +79,19 @@ static UIToolbar* sInputAccessoryView;
     
     self.validationCharacterSet = [[NSCharacterSet decimalDigitCharacterSet] invertedSet];
     self.value = 0;
+}
+
+/////////////////////////////////////////////////////
+//
+/////////////////////////////////////////////////////
+- (id) initWithFrame:(CGRect)frame
+{
+    if (self =  [super initWithFrame:frame])
+    {
+        [self commonInit];
+    }
+    
+    return self;
 }
 
 /////////////////////////////////////////////////////
