@@ -10,11 +10,27 @@
 
 static UIToolbar* sInputAccessoryView;
 
+@class UIXATMFieldInternalDelegate;
+
 @interface UIXATMField () <UITextFieldDelegate>
 @property (nonatomic, strong) NSString* actualStringValue;
 @property (nonatomic, assign) NSUInteger fractionDigits;
 @property (nonatomic, strong) NSCharacterSet* validationCharacterSet;
+@property (nonatomic, strong) UIXATMFieldInternalDelegate* internalDelegate;
+
 //@property (nonatomic, assign) NSUInteger numDecimalDigits;
+- (void) configureInputAccessoryView;
+
+@end
+
+/////////////////////////////////////////////////////
+//
+// I had to take this route to get it to play nice with 5.1.  5.1
+// did NOT like the UIXATMField being its own delegate AT ALL.
+// Would cause it to crash in the depths of Quartz
+//
+/////////////////////////////////////////////////////
+@interface UIXATMFieldInternalDelegate : NSObject <UITextFieldDelegate>
 @end
 
 @implementation UIXATMField
@@ -67,12 +83,9 @@ static UIToolbar* sInputAccessoryView;
     self.textAlignment = NSTextAlignmentRight;
     self.borderStyle = UITextBorderStyleRoundedRect;
     
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(contentChanged:)
-                                                 name:UITextFieldTextDidChangeNotification
-                                               object:self];
+    self.internalDelegate = [[UIXATMFieldInternalDelegate alloc] init];
+    self.delegate = self.internalDelegate;
     
-    self.delegate = self;
     self.actualStringValue = @"";
     
     self.fractionDigits = 0;
@@ -260,7 +273,6 @@ static UIToolbar* sInputAccessoryView;
     if (update)
     {
         NSLog(@"range=%@ repl=<%@> -- modRange=%@ currentText=%@ actual=%@",NSStringFromRange(range),string,NSStringFromRange(modRange),self.text,self.actualStringValue);
-//        self.actualStringValue = [self.actualStringValue stringByReplacingCharactersInRange:modRange withString:string];
         
         NSString* proposedActualStringValue = [self.actualStringValue stringByReplacingCharactersInRange:modRange
                                                                                               withString:string];
@@ -298,7 +310,6 @@ static UIToolbar* sInputAccessoryView;
 {
     self.decimalValue = [NSDecimalNumber decimalNumberWithDecimal:[[NSNumber numberWithFloat:value] decimalValue]];
     
-//    [self updateDisplay];
 }
 
 /////////////////////////////////////////////////////
@@ -318,9 +329,7 @@ static UIToolbar* sInputAccessoryView;
     _decimalValue = [decimalValue copy];
     
     [self updateDisplay];
-//    [self actualFromDecimal];
     [self actualFromDisplay];
-//    [self updateFloatValue];
 }
 
 /////////////////////////////////////////////////////
@@ -415,7 +424,7 @@ static UIToolbar* sInputAccessoryView;
 - (void) commonInit
 {
     [super commonInit];
-    self.keyboardType = UIKeyboardTypeNumberPad;
+//    self.keyboardType = UIKeyboardTypeNumberPad;
     
     UILabel* l = [[UILabel alloc] initWithFrame:CGRectZero];
     l.text = @"%";
@@ -557,5 +566,129 @@ static UIToolbar* sInputAccessoryView;
     
     return valid;
 }
+@end
+
+///////////////
+///////////////
+///////////////
+
+
+@implementation UIXATMFieldInternalDelegate
+
+- (id) init
+{
+    if (self = [super init])
+    {
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(contentChanged:)
+                                                     name:UITextFieldTextDidChangeNotification
+                                                   object:self];
+        
+    }
+    
+    return self;
+}
+
+/////////////////////////////////////////////////////
+//
+/////////////////////////////////////////////////////
+- (void) dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+/////////////////////////////////////////////////////
+//
+/////////////////////////////////////////////////////
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
+{
+    UIXATMField* atmField = (UIXATMField*) textField;
+    
+    if (atmField.showCancel || atmField.showDone)
+    {
+        [atmField configureInputAccessoryView];
+        atmField.inputAccessoryView = sInputAccessoryView;
+    }
+    
+    return YES;
+}
+
+/////////////////////////////////////////////////////
+//
+/////////////////////////////////////////////////////
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    //first lets make sure we have no inappropriate characters
+    UIXATMField* atmField = (UIXATMField*) textField;
+    
+    if (![atmField validateInput:string])
+    {
+        return NO;
+    }
+    
+    NSRange modRange;
+    BOOL update = YES;
+    
+    if (range.length == 1)
+    {
+        if (atmField.actualStringValue.length == 0)
+        {
+            update = NO;
+        }
+        else
+        {
+            modRange = NSMakeRange(atmField.actualStringValue.length-1, range.length);
+        }
+        
+    }
+    else
+    {
+        //adjust by the diff between field & actual
+        NSInteger diff = atmField.text.length - atmField.actualStringValue.length;
+        modRange = NSMakeRange(range.location - diff, range.length);
+    }
+    
+    if (update)
+    {
+        NSLog(@"range=%@ repl=<%@> -- modRange=%@ currentText=%@ actual=%@",NSStringFromRange(range),string,NSStringFromRange(modRange),atmField.text,atmField.actualStringValue);
+        
+        NSString* proposedActualStringValue = [atmField.actualStringValue stringByReplacingCharactersInRange:modRange
+                                                                                              withString:string];
+        NSDecimalNumber* proposedValue = [atmField decimalNumberFromString:proposedActualStringValue];
+        
+        if ([atmField shouldChangeValueTo:proposedValue])
+        {
+            BOOL valueValid = YES;
+            if (atmField.atmFieldDelegate && [atmField.atmFieldDelegate respondsToSelector:@selector(UIXATMField:shouldChangeValueTo:)])
+            {
+                valueValid = [atmField.atmFieldDelegate UIXATMField:atmField
+                                            shouldChangeValueTo:proposedValue];
+            }
+            
+            if (valueValid)
+            {
+                atmField.actualStringValue = proposedActualStringValue;
+                [atmField updateCurrentValue];
+                [atmField updateDisplay];
+                
+                if (atmField.atmFieldDelegate && [atmField.atmFieldDelegate respondsToSelector:@selector(UIXATMFieldChanged:)])
+                {
+                    [atmField.atmFieldDelegate  UIXATMFieldChanged:atmField];
+                }
+            }
+        }
+    }
+    return NO;
+}
+
+////////////////////////////////////////////////////////////
+//
+////////////////////////////////////////////////////////////
+- (void) contentChanged:(NSNotification*) notification
+{
+    [notification.object updateCurrentValue];
+    [notification.object updateDisplay];
+}
+
 @end
 
